@@ -3,14 +3,15 @@
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
   <Extern href="msobtnid.h"/>
-
-
+ 
   <Commands package="ClipboardDiffPackageId">
     <Groups>
       <Group guid="CommandSetId" id="ClipboardDiffMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
       </Group>
     </Groups>
+    
+    
     
     <Buttons>
       <Button guid="CommandSetId" id="ShowSettingsWindowCommandId" priority="0x0100" type="Button">
@@ -21,8 +22,15 @@
           <ButtonText>Clipboard Diff Settings</ButtonText>
         </Strings>
       </Button>
+      <Button guid="CommandSetId" id="ClipboardDiffCommandId" priority="0x0100" type="Button">
+        <Parent guid="CommandSetId" id="ClipboardDiffMenuGroup" />
+        <Icon guid="ClipboardDiffImagesId" id="bmpPic2" />
+        <Strings>
+          <CommandName>ClipboardDiffCommandId</CommandName>
+          <ButtonText>Diff against clipboard</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
-
     <Bitmaps>
       <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
     </Bitmaps>
@@ -32,6 +40,7 @@
     <GuidSymbol name="CommandSetId" value="{6f04d587-0360-458b-8501-02b2bc7bb002}">
       <IDSymbol name="ClipboardDiffMenuGroup" value="0x1020" />
       <IDSymbol name="ShowSettingsWindowCommandId" value="0x0100" />
+      <IDSymbol name="ClipboardDiffCommandId" value="0x0120" />
     </GuidSymbol>
     <GuidSymbol name="ClipboardDiffImagesId" value="{0c330581-3c09-478c-a584-e91e141aee5f}" >
       <IDSymbol name="bmpPic1" value="1" />
