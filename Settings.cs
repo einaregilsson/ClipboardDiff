@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace EinarEgilsson.ClipboardDiff
@@ -15,6 +9,12 @@ namespace EinarEgilsson.ClipboardDiff
         public Settings()
         {
             InitializeComponent();
+        }
+
+        public Settings(string program, string arguments) : this()
+        {
+            txtProgram.Text = program;
+            txtArguments.Text = arguments;
         }
 
         public string Program
@@ -42,7 +42,7 @@ namespace EinarEgilsson.ClipboardDiff
 
         private void OnCancelClick(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 
@@ -60,6 +60,7 @@ namespace EinarEgilsson.ClipboardDiff
                                 MessageBoxIcon.Error);
                 return;
             }
+            DialogResult = DialogResult.OK;
             Close();
         }
     }

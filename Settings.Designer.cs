@@ -54,7 +54,7 @@
             this.txtArguments.Name = "txtArguments";
             this.txtArguments.Size = new System.Drawing.Size(449, 20);
             this.txtArguments.TabIndex = 1;
-            this.txtArguments.Text = "$FILE1$ $FILE2$";
+            this.txtArguments.Text = "";
             // 
             // lblArguments
             // 
