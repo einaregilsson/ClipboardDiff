@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
-using Microsoft.Win32;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Process = System.Diagnostics.Process;
 
@@ -20,7 +15,7 @@ namespace EinarEgilsson.ClipboardDiff
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid("b02989c2-1a8e-4f11-81a4-957f1d18db10")]
-    public sealed class ClipboardDiffPackage : Package, IOleCommandTarget
+    public sealed class ClipboardDiffPackage : Package
     {
         public static readonly Guid CommandSetId = new Guid("6f04d587-0360-458b-8501-02b2bc7bb002");
         public const int ShowSettingsWindowCommandId = 0x100;
@@ -30,9 +25,11 @@ namespace EinarEgilsson.ClipboardDiff
         private const string RegistryProgram = "DiffProgram";
         private const string RegistryArguments = "Arguments";
 
-        public string Program { get; set; }
-        public string Arguments { get; set; }
+        private string _program;
+        private string _arguments;
         private DTE2 _app;
+        private readonly string tempFolder = Path.Combine(Path.GetTempPath(), "ClipboardDiff");
+
 
         private void SaveSettings()
         {
@@ -44,8 +41,8 @@ namespace EinarEgilsson.ClipboardDiff
                 key = UserRegistryRoot.OpenSubKey(RegistryRoot, true);
             }
             Debug.Assert(key != null);
-            key.SetValue(RegistryProgram, Program);
-            key.SetValue(RegistryArguments, Arguments);
+            key.SetValue(RegistryProgram, _program);
+            key.SetValue(RegistryArguments, _arguments);
         }
 
 
@@ -55,19 +52,19 @@ namespace EinarEgilsson.ClipboardDiff
             var subKey = UserRegistryRoot.OpenSubKey(RegistryRoot);
             if (subKey != null)
             {
-                Program = (string)subKey.GetValue(RegistryProgram);
-                Arguments = (string)subKey.GetValue(RegistryArguments);
+                _program = (string)subKey.GetValue(RegistryProgram);
+                _arguments = (string)subKey.GetValue(RegistryArguments);
             }
 
             //Didn't exist, try default paths
-            if (string.IsNullOrEmpty(Program))
+            if (string.IsNullOrEmpty(_program))
             {
                 foreach (var pair in DiffTools.Paths)
                 {
                     if (File.Exists(pair.Key))
                     {
-                        Program = pair.Key;
-                        Arguments = pair.Value;
+                        _program = pair.Key;
+                        _arguments = pair.Value;
                         return;
                     }
                 }
@@ -80,14 +77,16 @@ namespace EinarEgilsson.ClipboardDiff
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (mcs != null)
             {
-                mcs.AddCommand(new MenuCommand(ShowSettingsWindow, new CommandID(CommandSetId, ShowSettingsWindowCommandId)));
-                mcs.AddCommand(new MenuCommand(DiffWithClipboard, new CommandID(CommandSetId, ClipboardDiffCommandId)));
+                mcs.AddCommand(new MenuCommand((o,e)=>ShowSettingsWindow(), new CommandID(CommandSetId, ShowSettingsWindowCommandId)));
+                var diffCommand = new OleMenuCommand((o,e)=>DiffWithClipboard(), new CommandID(CommandSetId, ClipboardDiffCommandId));
+                diffCommand.BeforeQueryStatus += (cmd, e) => ((MenuCommand) cmd).Enabled = ClipboardAndSelectionBothHaveText();
+                mcs.AddCommand(diffCommand);
             }
             _app = (DTE2)GetGlobalService(typeof(DTE));
             LoadSettings();
         }
 
-        private bool CanDiff()
+        private bool ClipboardAndSelectionBothHaveText()
         {
             return Clipboard.ContainsText()
                 && _app.ActiveDocument != null
@@ -95,43 +94,74 @@ namespace EinarEgilsson.ClipboardDiff
                 && ((TextSelection)_app.ActiveDocument.Selection).Text.Length > 0;
         }
 
-        private void DiffWithClipboard(object sender, EventArgs e)
+
+        private void DiffWithClipboard()
         {
-            if (!CanDiff())
+            if (!ClipboardAndSelectionBothHaveText())
             {
                 return;
             }
 
-            if (string.IsNullOrEmpty(Program))
+            if (!VerifySettings())
+            {
+                return;
+            }
+            
+            VerifyTempFolder();
+
+            string extension = Path.GetExtension(_app.ActiveDocument.Name);
+
+            string clipboardFile = WriteClipboardTextToTempFile(extension);
+            string selectionFile = WriteSelectionTextToTempFile(extension);
+
+            StartDiffProgram(clipboardFile, selectionFile);
+            DeleteOldTempFiles(clipboardFile, selectionFile);
+        }
+
+        private string WriteClipboardTextToTempFile(string extension)
+        {
+            string clipboardFile = Path.Combine(tempFolder, "clipboard_" + DateTime.Now.Ticks + extension);
+            File.WriteAllText(clipboardFile, Clipboard.GetText());
+            return clipboardFile;
+        }
+
+        private string WriteSelectionTextToTempFile(string extension)
+        {
+            string selectionFile = Path.Combine(tempFolder, "selection_" + DateTime.Now.Ticks + extension);
+            File.WriteAllText(selectionFile, ((TextSelection)_app.ActiveDocument.Selection).Text);
+            return selectionFile;
+        }
+
+        private void StartDiffProgram(string clipboardFile, string selectionFile)
+        {
+            Process.Start(_program, GetArguments(clipboardFile, selectionFile));
+        }
+
+        private string GetArguments(string clipboardFile, string selectionFile)
+        {
+            string args = _arguments.Replace("$FILE1$", "\"" + clipboardFile + "\"").Replace("$FILE2$",
+                                                                                             "\"" + selectionFile + "\"");
+            args = args.Replace("\"\"", "\"");
+            return args;
+        }
+
+        private bool VerifySettings()
+        {
+            if (string.IsNullOrEmpty(_program))
             {
                 MessageBox.Show(
                     "You have not used Clipboard Diff before. You must first choose which diff tool you want to use.",
                     "Diff tool missing", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ShowSettingsWindow(this, e);
-                return;
+                ShowSettingsWindow();
             }
 
-            string clipboardText = Clipboard.GetText();
+            //True if we have the settings set up, so caller can continue with diff operation
+            return !string.IsNullOrEmpty(_program);
+        }
 
-            string folder = Path.Combine(Path.GetTempPath(), "ClipboardDiff");
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-            string extension = Path.GetExtension(_app.ActiveDocument.Name);
-            string clipboardFile = Path.Combine(folder, "clipboard_" + DateTime.Now.Ticks + extension);
-            string selectionFile = Path.Combine(folder, "selection_" + DateTime.Now.Ticks + extension);
-
-            string selectionText = ((TextSelection)_app.ActiveDocument.Selection).Text;
-
-            File.WriteAllText(clipboardFile, clipboardText);
-            File.WriteAllText(selectionFile, selectionText);
-
-            string args = Arguments.Replace("$FILE1$", "\"" + clipboardFile + "\"").Replace("$FILE2$",
-                                                                                "\"" + selectionFile + "\"");
-            args = args.Replace("\"\"", "\"");
-            Process.Start(Program, args);
-            foreach (string filename in Directory.GetFiles(folder))
+        private void DeleteOldTempFiles(string clipboardFile, string selectionFile)
+        {
+            foreach (string filename in Directory.GetFiles(tempFolder))
             {
                 //Clean older files that are still hanging around
                 if (filename != selectionFile && filename != clipboardFile)
@@ -140,7 +170,9 @@ namespace EinarEgilsson.ClipboardDiff
                     {
                         File.Delete(filename);
                     }
-                    catch (Exception)
+// ReSharper disable EmptyGeneralCatchClause
+                    catch
+// ReSharper restore EmptyGeneralCatchClause
                     {
                         //Do nothing! We just try
                     }
@@ -148,14 +180,22 @@ namespace EinarEgilsson.ClipboardDiff
             }
         }
 
-
-        private void ShowSettingsWindow(object sender, EventArgs e)
+        private void VerifyTempFolder()
         {
-            var dlg = new Settings(Program ?? "", Arguments ?? "$FILE1$ $FILE2$");
+            if (!Directory.Exists(tempFolder))
+            {
+                Directory.CreateDirectory(tempFolder);
+            }
+        }
+
+
+        private void ShowSettingsWindow()
+        {
+            var dlg = new Settings(_program ?? "", _arguments ?? "$FILE1$ $FILE2$");
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Program = dlg.Program;
-                Arguments = dlg.Arguments;
+                _program = dlg.Program;
+                _arguments = dlg.Arguments;
                 SaveSettings();
             }
         }
