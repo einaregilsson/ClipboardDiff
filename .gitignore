@@ -1,3 +1,6 @@
-bin/ 
-obj/ 
-ClipboardDiff.5.1.ReSharper.user 
+bin/
+obj/
+*.suo
+ClipboardDiff.5.1.ReSharper.user*
+_ReSharper.ClipboardDiff/
+
