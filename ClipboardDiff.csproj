@@ -11,7 +11,8 @@
     <RootNamespace>EinarEgilsson.ClipboardDiff</RootNamespace>
     <AssemblyName>ClipboardDiff</AssemblyName>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="!Exists($(StrongNameKeyFile))">Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="Exists($(StrongNameKeyFile))">$(StrongNameKeyFile)</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -139,6 +140,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="README" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -156,7 +158,22 @@
     <None Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Package.ico" />
+    <Content Include="icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="preview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Resource Include="Resources\Package.ico" />
+    <Resource Include="Resources\preview.png" />
+    <Resource Include="Resources\icon.png" />
+    <Resource Include="Resources\license.txt" />
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
