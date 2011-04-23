@@ -1,4 +1,24 @@
-﻿using System;
+﻿#region License
+/* 
+ClipboardDiff Visual Studio Extension
+Copyright (C) 2011 Einar Egilsson
+http://tech.einaregilsson.com/2011/xx/xx/clipboard-diff/
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+#endregion
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -7,6 +27,7 @@ using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Process = System.Diagnostics.Process;
 
 namespace EinarEgilsson.ClipboardDiff
@@ -15,6 +36,8 @@ namespace EinarEgilsson.ClipboardDiff
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid("b02989c2-1a8e-4f11-81a4-957f1d18db10")]
+    [ProvideAutoLoad(UIContextGuids80.NoSolution)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     public sealed class ClipboardDiffPackage : Package
     {
         public static readonly Guid CommandSetId = new Guid("6f04d587-0360-458b-8501-02b2bc7bb002");
@@ -45,8 +68,6 @@ namespace EinarEgilsson.ClipboardDiff
             key.SetValue(RegistryArguments, _arguments);
         }
 
-
-
         private void LoadSettings()
         {
             var subKey = UserRegistryRoot.OpenSubKey(RegistryRoot);
@@ -74,6 +95,13 @@ namespace EinarEgilsson.ClipboardDiff
         protected override void Initialize()
         {
             base.Initialize();
+            _app = (DTE2)GetGlobalService(typeof(DTE));
+            InitializeMenuCommands();
+            LoadSettings();
+        }
+
+        private void InitializeMenuCommands()
+        {
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (mcs != null)
             {
@@ -82,8 +110,6 @@ namespace EinarEgilsson.ClipboardDiff
                 diffCommand.BeforeQueryStatus += (cmd, e) => ((MenuCommand) cmd).Enabled = ClipboardAndSelectionBothHaveText();
                 mcs.AddCommand(diffCommand);
             }
-            _app = (DTE2)GetGlobalService(typeof(DTE));
-            LoadSettings();
         }
 
         private bool ClipboardAndSelectionBothHaveText()
