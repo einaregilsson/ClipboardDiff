@@ -16,7 +16,7 @@
     <Buttons>
       <Button guid="CommandSetId" id="ShowSettingsWindowCommandId" priority="0x0100" type="Button">
         <Parent guid="CommandSetId" id="ClipboardDiffToolsMenuGroup" />
-        <Icon guid="ClipboardDiffImagesId" id="bmpSettings" />
+        <Icon guid="ClipboardDiffImagesId" id="bmpDiff" />
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>ClipboardDiff.OpenSettingsWindow</ButtonText>
@@ -33,7 +33,7 @@
       </Button>
     </Buttons>
     <Bitmaps>
-      <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpDiff, bmpSettings"/>
+      <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpDiff"/>
     </Bitmaps>
   </Commands>
 
@@ -53,7 +53,6 @@
     
     <GuidSymbol name="ClipboardDiffImagesId" value="{0c330581-3c09-478c-a584-e91e141aee5f}" >
       <IDSymbol name="bmpDiff" value="1" />
-      <IDSymbol name="bmpSettings" value="2" />
     </GuidSymbol>
   </Symbols>
   
