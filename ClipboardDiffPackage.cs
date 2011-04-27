@@ -56,7 +56,6 @@ namespace EinarEgilsson.ClipboardDiff
 
         private void SaveSettings()
         {
-            
             var key = UserRegistryRoot.OpenSubKey(RegistryRoot, true);
             if (key == null)
             {
@@ -103,13 +102,19 @@ namespace EinarEgilsson.ClipboardDiff
         private void InitializeMenuCommands()
         {
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            
             if (mcs != null)
             {
-                mcs.AddCommand(new MenuCommand((o,e)=>ShowSettingsWindow(), new CommandID(CommandSetId, ShowSettingsWindowCommandId)));
+                var showSettingsCommand = new OleMenuCommand((o, e) => ShowSettingsWindow(),
+                                                          new CommandID(CommandSetId, ShowSettingsWindowCommandId));
+                showSettingsCommand.Text = "ClipboardDiff Settings";
+                mcs.AddCommand(showSettingsCommand);
                 var diffCommand = new OleMenuCommand((o,e)=>DiffWithClipboard(), new CommandID(CommandSetId, ClipboardDiffCommandId));
+                diffCommand.Text = "Diff selection against clipboard";
                 diffCommand.BeforeQueryStatus += (cmd, e) => ((MenuCommand) cmd).Enabled = ClipboardAndSelectionBothHaveText();
                 mcs.AddCommand(diffCommand);
             }
+
         }
 
         private bool ClipboardAndSelectionBothHaveText()
@@ -146,16 +151,21 @@ namespace EinarEgilsson.ClipboardDiff
 
         private string WriteClipboardTextToTempFile(string extension)
         {
-            string clipboardFile = Path.Combine(tempFolder, "clipboard_" + DateTime.Now.Ticks + extension);
+            string clipboardFile = Path.Combine(tempFolder, "clipboard_" + Timestamp() + extension);
             File.WriteAllText(clipboardFile, Clipboard.GetText());
             return clipboardFile;
         }
 
         private string WriteSelectionTextToTempFile(string extension)
         {
-            string selectionFile = Path.Combine(tempFolder, "selection_" + DateTime.Now.Ticks + extension);
+            string selectionFile = Path.Combine(tempFolder, "selection_" + Timestamp() + extension);
             File.WriteAllText(selectionFile, ((TextSelection)_app.ActiveDocument.Selection).Text);
             return selectionFile;
+        }
+
+        private static string Timestamp()
+        {
+            return DateTime.Now.ToString("yyyyMMdd-HHmmss");
         }
 
         private void StartDiffProgram(string clipboardFile, string selectionFile)

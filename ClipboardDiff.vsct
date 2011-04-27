@@ -6,49 +6,55 @@
  
   <Commands package="ClipboardDiffPackageId">
     <Groups>
-      <Group guid="CommandSetId" id="ClipboardDiffMenuGroup" priority="0x0600">
+      <Group guid="CommandSetId" id="ClipboardDiffToolsMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      </Group>
+      <Group guid="CommandSetId" id="ClipboardDiffContextMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
       </Group>
     </Groups>
-    
-    
-    
     <Buttons>
       <Button guid="CommandSetId" id="ShowSettingsWindowCommandId" priority="0x0100" type="Button">
-        <Parent guid="CommandSetId" id="ClipboardDiffMenuGroup" />
-        <Icon guid="ClipboardDiffImagesId" id="bmpPic1" />
+        <Parent guid="CommandSetId" id="ClipboardDiffToolsMenuGroup" />
+        <Icon guid="ClipboardDiffImagesId" id="bmpSettings" />
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>ShowSettingsWindowCommandId</CommandName>
-          <ButtonText>Clipboard Diff Settings</ButtonText>
+          <ButtonText>ClipboardDiff.OpenSettingsWindow</ButtonText>
         </Strings>
       </Button>
       <Button guid="CommandSetId" id="ClipboardDiffCommandId" priority="0x0100" type="Button">
-        <Parent guid="CommandSetId" id="ClipboardDiffMenuGroup" />
-        <Icon guid="ClipboardDiffImagesId" id="bmpPic2" />
+        <Parent guid="CommandSetId" id="ClipboardDiffContextMenuGroup" />
+        <Icon guid="ClipboardDiffImagesId" id="bmpDiff" />
         <CommandFlag>DefaultDisabled</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <CommandName>ClipboardDiffCommandId</CommandName>
-          <ButtonText>Diff against clipboard</ButtonText>
+          <ButtonText>ClipboardDiff.DiffTextSelectionAgainstClipboard</ButtonText>
         </Strings>
       </Button>
     </Buttons>
     <Bitmaps>
-      <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
+      <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpDiff, bmpSettings"/>
     </Bitmaps>
   </Commands>
+
   <Symbols>
     <GuidSymbol name="ClipboardDiffPackageId" value="{b02989c2-1a8e-4f11-81a4-957f1d18db10}" />
+    
     <GuidSymbol name="CommandSetId" value="{6f04d587-0360-458b-8501-02b2bc7bb002}">
-      <IDSymbol name="ClipboardDiffMenuGroup" value="0x1020" />
+      
+      <IDSymbol name="ClipboardDiffToolsMenuGroup" value="0x1020" />
+      <IDSymbol name="ClipboardDiffContextMenuGroup" value="0x1040" />
+      <IDSymbol name="ClipboardDiffMenu" value="0x1060" />
+
       <IDSymbol name="ShowSettingsWindowCommandId" value="0x0100" />
       <IDSymbol name="ClipboardDiffCommandId" value="0x0120" />
+      
     </GuidSymbol>
+    
     <GuidSymbol name="ClipboardDiffImagesId" value="{0c330581-3c09-478c-a584-e91e141aee5f}" >
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpDiff" value="1" />
+      <IDSymbol name="bmpSettings" value="2" />
     </GuidSymbol>
   </Symbols>
+  
 </CommandTable>
