@@ -2,7 +2,7 @@ ClipboardDiff Visual Studio Extension
 
 Copyright (C) 2011 Einar Egilsson
 
-http://tech.einaregilsson.com/2011/05/02/clipboarddiff-visual-studio-extension/
+http://tech.einaregilsson.com/2011/04/29/clipboarddiff-visual-studio-extension/
 
 This extension for Visual Studio 2010 allows you to diff the currently
 selected text against the contents of the clipboard, which is useful

@@ -125,7 +125,7 @@
 
 Diffs the selected text against the contents of the clipboard.
 
-http://tech.einaregilsson.com/2011/05/02/clipboarddiff-visual-studio-extension/</value>
+http://tech.einaregilsson.com/2011/04/29/clipboarddiff-visual-studio-extension/</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="400" type="System.Resources.ResXFileRef, System.Windows.Forms">

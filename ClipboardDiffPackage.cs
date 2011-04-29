@@ -2,7 +2,7 @@
 /* 
 ClipboardDiff Visual Studio Extension
 Copyright (C) 2011 Einar Egilsson
-http://tech.einaregilsson.com/2011/05/02/clipboarddiff-visual-studio-extension/
+http://tech.einaregilsson.com/2011/04/29/clipboarddiff-visual-studio-extension/
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -227,12 +227,14 @@ namespace EinarEgilsson.ClipboardDiff
 
         private void ShowSettingsWindow()
         {
-            var dlg = new Settings(_program ?? "", _arguments ?? "$FILE1$ $FILE2$");
-            if (dlg.ShowDialog() == DialogResult.OK)
+            using (var dlg = new Settings(_program ?? "", _arguments ?? "$FILE1$ $FILE2$"))
             {
-                _program = dlg.Program;
-                _arguments = dlg.Arguments;
-                SaveSettings();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    _program = dlg.Program;
+                    _arguments = dlg.Arguments;
+                    SaveSettings();
+                }
             }
         }
     }

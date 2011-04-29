@@ -2,7 +2,7 @@
 /* 
 ClipboardDiff Visual Studio Extension
 Copyright (C) 2011 Einar Egilsson
-http://tech.einaregilsson.com/2011/05/02/clipboarddiff-visual-studio-extension/
+http://tech.einaregilsson.com/2011/04/29/clipboarddiff-visual-studio-extension/
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
