@@ -21,18 +21,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ClipboardDiff")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Visual Studio 2010 extension to diff selected text against the clipboard contents.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Einar Egilsson")]
 [assembly: AssemblyProduct("ClipboardDiff")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Copyright (C) 2011 Einar Egilsson")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]   
 [assembly: ComVisible(false)]     

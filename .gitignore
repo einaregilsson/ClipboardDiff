@@ -4,4 +4,6 @@ obj/
 ClipboardDiff.5.1.ReSharper.user*
 _ReSharper.ClipboardDiff/
 *.ReSharper
+*.cache
+
 

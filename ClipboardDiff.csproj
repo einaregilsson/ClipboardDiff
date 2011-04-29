@@ -11,8 +11,8 @@
     <RootNamespace>EinarEgilsson.ClipboardDiff</RootNamespace>
     <AssemblyName>ClipboardDiff</AssemblyName>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile Condition="!Exists($(StrongNameKeyFile))">Key.snk</AssemblyOriginatorKeyFile>
-    <AssemblyOriginatorKeyFile Condition="Exists($(StrongNameKeyFile))">$(StrongNameKeyFile)</AssemblyOriginatorKeyFile>
+    <StrongNameKeyFile Condition=" '$(StrongNameKeyFile)' == '' ">Key.snk</StrongNameKeyFile>
+    <AssemblyOriginatorKeyFile>$(StrongNameKeyFile)</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
