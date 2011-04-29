@@ -6,7 +6,7 @@
     <Version>1.0</Version>
     <Description xml:space="preserve">Diffs the selected text against the current clipboard content. Which diff tool is used is configurable.</Description>
     <Locale>1033</Locale>
-    <MoreInfoUrl>http://tech.einaregilsson.com/2011/xx/xx/clipboard-diff/q</MoreInfoUrl>
+    <MoreInfoUrl>http://tech.einaregilsson.com/2011/05/02/clipboarddiff-visual-studio-extension/q</MoreInfoUrl>
     <License>Resources\license.txt</License>
     <Icon>Resources\icon.png</Icon>
     <PreviewImage>Resources\preview.png</PreviewImage>

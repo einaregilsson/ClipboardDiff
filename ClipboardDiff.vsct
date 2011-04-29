@@ -36,7 +36,9 @@
       <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpDiff"/>
     </Bitmaps>
   </Commands>
-
+  <KeyBindings>
+    <KeyBinding editor="guidVSStd97" key1="j" mod1="Shift Alt" guid="CommandSetId" id="ClipboardDiffCommandId"/>
+  </KeyBindings>
   <Symbols>
     <GuidSymbol name="ClipboardDiffPackageId" value="{b02989c2-1a8e-4f11-81a4-957f1d18db10}" />
     

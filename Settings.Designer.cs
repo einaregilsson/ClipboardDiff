@@ -2,7 +2,7 @@
 /* 
 ClipboardDiff Visual Studio Extension
 Copyright (C) 2011 Einar Egilsson
-http://tech.einaregilsson.com/2011/xx/xx/clipboard-diff/
+http://tech.einaregilsson.com/2011/05/02/clipboarddiff-visual-studio-extension/
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ namespace EinarEgilsson.ClipboardDiff
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
             this.txtProgram = new System.Windows.Forms.TextBox();
             this.txtArguments = new System.Windows.Forms.TextBox();
             this.lblArguments = new System.Windows.Forms.Label();
@@ -74,7 +75,6 @@ namespace EinarEgilsson.ClipboardDiff
             this.txtArguments.Name = "txtArguments";
             this.txtArguments.Size = new System.Drawing.Size(449, 20);
             this.txtArguments.TabIndex = 1;
-            this.txtArguments.Text = "";
             // 
             // lblArguments
             // 
@@ -143,10 +143,10 @@ namespace EinarEgilsson.ClipboardDiff
             this.Controls.Add(this.txtArguments);
             this.Controls.Add(this.txtProgram);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Settings";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ClipboardDiff Settings";
