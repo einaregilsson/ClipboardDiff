@@ -13,10 +13,10 @@ Follow me on twitter [@einaregilsson](http://twitter.com/einaregilsson) for noti
 
 ### Right click on a selection and choose 'Diff selection against keyboard' or press Shift+Alt+J.
 
-![Screenshot of how to use the extension](https://github.com/einaregilsson/ClipboardDiff/raw/master/screenshot/contextmenu.png)
+![Screenshot of how to use the extension](https://github.com/einaregilsson/ClipboardDiff/raw/master/screenshots/contextmenu.png)
 
 ### Configure which diff tool to use and which parameters by going to Tools->ClipboardDiff Settings.
 
-![Screenshot of how to configure the extension](https://github.com/einaregilsson/ClipboardDiff/raw/master/screenshot/settings.png)
+![Screenshot of how to configure the extension](https://github.com/einaregilsson/ClipboardDiff/raw/master/screenshots/settings.png)
 
  
