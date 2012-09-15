@@ -1,8 +1,8 @@
 ﻿#region License
 /* 
 ClipboardDiff Visual Studio Extension
-Copyright (C) 2011 Einar Egilsson
-http://tech.einaregilsson.com/2011/04/29/clipboarddiff-visual-studio-extension/
+Copyright (C) 2011-2012 Einar Egilsson
+http://einaregilsson.com/clipboarddiff-visual-studio-extension/
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,11 +27,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ClipboardDiff")]
-[assembly: AssemblyDescription("Visual Studio 2010 extension to diff selected text against the clipboard contents.")]
+[assembly: AssemblyDescription("Visual Studio 2010/2012 extension to diff selected text against the clipboard contents.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Einar Egilsson")]
 [assembly: AssemblyProduct("ClipboardDiff")]
-[assembly: AssemblyCopyright("Copyright (C) 2011 Einar Egilsson")]
+[assembly: AssemblyCopyright("Copyright (C) 2011-2012 Einar Egilsson")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]   
 [assembly: ComVisible(false)]     
@@ -48,8 +48,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 
 

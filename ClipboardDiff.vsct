@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <Extern href="stdidcmd.h"/>
-  <Extern href="vsshlids.h"/>
-  <Extern href="msobtnid.h"/>
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <!--<Extern href="msobtnid.h" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" />-->
  
   <Commands package="ClipboardDiffPackageId">
     <Groups>
       <Group guid="CommandSetId" id="ClipboardDiffToolsMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
       </Group>
       <Group guid="CommandSetId" id="ClipboardDiffContextMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
       </Group>
     </Groups>
     <Buttons>
@@ -33,11 +33,11 @@
       </Button>
     </Buttons>
     <Bitmaps>
-      <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpDiff"/>
+      <Bitmap guid="ClipboardDiffImagesId" href="Resources\Images_32bit.bmp" usedList="bmpDiff" />
     </Bitmaps>
   </Commands>
   <KeyBindings>
-    <KeyBinding editor="guidVSStd97" key1="j" mod1="Shift Alt" guid="CommandSetId" id="ClipboardDiffCommandId"/>
+    <KeyBinding editor="guidVSStd97" key1="j" mod1="Shift Alt" guid="CommandSetId" id="ClipboardDiffCommandId" />
   </KeyBindings>
   <Symbols>
     <GuidSymbol name="ClipboardDiffPackageId" value="{b02989c2-1a8e-4f11-81a4-957f1d18db10}" />
@@ -53,7 +53,7 @@
       
     </GuidSymbol>
     
-    <GuidSymbol name="ClipboardDiffImagesId" value="{0c330581-3c09-478c-a584-e91e141aee5f}" >
+    <GuidSymbol name="ClipboardDiffImagesId" value="{0c330581-3c09-478c-a584-e91e141aee5f}">
       <IDSymbol name="bmpDiff" value="1" />
     </GuidSymbol>
   </Symbols>
