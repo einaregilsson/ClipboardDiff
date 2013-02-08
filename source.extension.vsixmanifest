@@ -3,11 +3,12 @@
   <Identifier Id="b02989c2-1a8e-4f11-81a4-957f1d18db10">
     <Name>ClipboardDiff</Name>
     <Author>Einar Egilsson</Author>
-    <Version>1.1</Version>
+    <Version>1.2</Version>
     <Description xml:space="preserve">Diffs the selected text against the current clipboard content. Which diff tool is used is configurable.</Description>
     <Locale>1033</Locale>
-    <MoreInfoUrl>http://einaregilsson.com/clipboarddiff-visual-studio-extension/
-q</MoreInfoUrl>
+    <MoreInfoUrl>
+      http://einaregilsson.com/clipboarddiff-visual-studio-extension/
+    </MoreInfoUrl>
     <License>Resources\license.txt</License>
     <Icon>Resources\icon.png</Icon>
     <PreviewImage>Resources\preview.png</PreviewImage>

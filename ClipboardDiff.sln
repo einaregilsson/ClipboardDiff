@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardDiff", "ClipboardDiff.csproj", "{664D815D-14CE-49FC-A942-CD7084D5E547}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardDiff", "ClipboardDiff.csproj", "{B26DAEEF-EEDF-4AED-B6DB-35FF70F3DDEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{664D815D-14CE-49FC-A942-CD7084D5E547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{664D815D-14CE-49FC-A942-CD7084D5E547}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{664D815D-14CE-49FC-A942-CD7084D5E547}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{664D815D-14CE-49FC-A942-CD7084D5E547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B26DAEEF-EEDF-4AED-B6DB-35FF70F3DDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B26DAEEF-EEDF-4AED-B6DB-35FF70F3DDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B26DAEEF-EEDF-4AED-B6DB-35FF70F3DDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B26DAEEF-EEDF-4AED-B6DB-35FF70F3DDEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
