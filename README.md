@@ -8,7 +8,7 @@
 
 Simple Visual Studio 2010 extension that lets you copy some text, select some more text and then diff the selected text against the clipboard text. Useful for comparing methods that look almost the same. Which diff tool is used can be configured. More info at the above url.
 
-Written in C#, licensed under the [GPL v3](http://www.gnu.org/licenses/gpl.html).
+Written in C#, licensed under the MIT license, see the file LICENSE for details.
 
 Follow me on twitter [@einaregilsson](http://twitter.com/einaregilsson) for notifications, updates and more Visual Studio extensions.
 
