@@ -1,5 +1,6 @@
 bin/
 obj/
+packages/
 *.suo
 ClipboardDiff.5.1.ReSharper.user*
 _ReSharper.ClipboardDiff/

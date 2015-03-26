@@ -3,7 +3,7 @@
   <Identifier Id="b02989c2-1a8e-4f11-81a4-957f1d18db10">
     <Name>ClipboardDiff</Name>
     <Author>Einar Egilsson</Author>
-    <Version>1.3</Version>
+    <Version>1.4</Version>
     <Description xml:space="preserve">Diffs the selected text against the current clipboard content. Which diff tool is used is configurable.</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>
@@ -18,16 +18,25 @@
         <Edition>Ultimate</Edition>
         <Edition>Premium</Edition>
         <Edition>Pro</Edition>
+        <Edition>IntegratedShell</Edition>
       </VisualStudio>
       <VisualStudio Version="11.0">
         <Edition>Ultimate</Edition>
         <Edition>Premium</Edition>
         <Edition>Pro</Edition>
+        <Edition>IntegratedShell</Edition>
       </VisualStudio>
       <VisualStudio Version="12.0">
         <Edition>Ultimate</Edition>
         <Edition>Premium</Edition>
         <Edition>Pro</Edition>
+        <Edition>IntegratedShell</Edition>
+      </VisualStudio>
+      <VisualStudio Version="14.0">
+        <Edition>Ultimate</Edition>
+        <Edition>Premium</Edition>
+        <Edition>Pro</Edition>
+        <Edition>IntegratedShell</Edition>
       </VisualStudio>
     </SupportedProducts>
     <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.5" />
