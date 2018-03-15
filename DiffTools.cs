@@ -11,34 +11,61 @@ for details.
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace EinarEgilsson.ClipboardDiff
 {
+    internal class DiffTool
+    {
+        public string Path { get; set; }
+        public string Arguments { get; set; }
+    }
+
     internal static class DiffTools
     {
-        static DiffTools()
-        {
-            foreach (var key in Paths.Keys.ToArray())
-            {
-                string args = Paths[key];
-                Paths.Remove(key);
-                Paths.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), key), args);
-                string x86Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), key);
-                if (!Paths.ContainsKey(x86Path))
-                {
-                    Paths.Add(x86Path, args);
-                }
-            }
-        }
 
-        internal static Dictionary<string, string> Paths = new Dictionary<string, string>
+        internal static List<DiffTool> GetCandidates()
         {
-            //TODO: Add as many diff tools as possible...
-            {@"Perforce\p4merge.exe", "$FILE1$ $FILE2$"},
-            {@"tortoisesvn\bin\TortoiseMerge.exe", "$FILE1$ $FILE2$"},
-            {@"WinMerge\WinMergeU.exe", "$FILE1$ $FILE2$"},
-        };
+            var result = new List<DiffTool>();
+            //Ok, vsDiffMerge is our default choice here, since it's integrated into VS itself...
+            var processFullPath = Process.GetCurrentProcess().MainModule.FileName;
+            var vsFolder = Path.GetDirectoryName(processFullPath);
+            const string vsDiffMergeArgs = "$FILE1$ $FILE2$ /t";
+
+            //Older VS versions
+            result.Add(new DiffTool
+            {
+                Path = Path.Combine(vsFolder, "vsDiffMerge.exe"),
+                Arguments = vsDiffMergeArgs
+            });
+
+            //VS 2017 versions
+            result.Add(new DiffTool
+            {
+                Path = Path.Combine(vsFolder, @"CommonExtensions\Microsoft\TeamFoundation\Team Explorer\vsDiffMerge.exe"),
+                Arguments = vsDiffMergeArgs
+            });
+
+            const string defaultArgs = "$FILE1$ $FILE2$";
+
+            //These will probably never be used anymore, except in really old VS version, but we'll leave them in here just in case...
+            foreach (var path in new[] { @"Perforce\p4merge.exe", @"tortoisesvn\bin\TortoiseMerge.exe", @"WinMerge\WinMergeU.exe" })
+            {
+                result.Add(new DiffTool
+                {
+                    //Hardcode the program files because running in 32-bit VS will always return the x86 folder, and
+                    //we might have a program in the "real" program files...
+                    Path = Path.Combine(@"C:\Program Files", path),
+                    Arguments = defaultArgs
+                });
+                result.Add(new DiffTool
+                {
+                    Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), path),
+                    Arguments = defaultArgs
+                });
+            }
+            return result;
+        }
     }
 }

@@ -70,12 +70,12 @@ namespace EinarEgilsson.ClipboardDiff
             //Didn't exist, try default paths
             if (string.IsNullOrEmpty(_program))
             {
-                foreach (var pair in DiffTools.Paths)
+                foreach (var diffTool in DiffTools.GetCandidates())
                 {
-                    if (File.Exists(pair.Key))
+                    if (File.Exists(diffTool.Path))
                     {
-                        _program = pair.Key;
-                        _arguments = pair.Value;
+                        _program = diffTool.Path;
+                        _arguments = diffTool.Arguments;
                         return;
                     }
                 }
@@ -161,7 +161,22 @@ namespace EinarEgilsson.ClipboardDiff
 
         private void StartDiffProgram(string clipboardFile, string selectionFile)
         {
-            Process.Start(_program, GetArguments(clipboardFile, selectionFile));
+            //Ugly, but the easiest way to detect vsdiffmerge which starts up with a console
+            //which is ugly and we want to hide...
+            if (_program.Contains("vsDiffMerge.exe"))
+            {
+                var p = new Process();
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.StartInfo.FileName = _program;
+                p.StartInfo.Arguments = GetArguments(clipboardFile, selectionFile);
+                p.Start();
+            }
+            else
+            {
+                Process.Start(_program, GetArguments(clipboardFile, selectionFile));
+            }
         }
 
         private string GetArguments(string clipboardFile, string selectionFile)
